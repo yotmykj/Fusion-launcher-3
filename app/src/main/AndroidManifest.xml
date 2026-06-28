@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Required Permissions -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.CHANGE_DEVICE_ADMIN" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <!-- TV Features -->
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_scheme"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.FusionLauncher"
+        tools:targetApi="31">
+
+        <!-- Main Launcher Activity -->
+        <activity
+            android:name=".presentation.home.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="sensorLandscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- All Apps Activity -->
+        <activity
+            android:name=".presentation.apps.AllAppsActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
+
+        <!-- App Detail Activity -->
+        <activity
+            android:name=".presentation.appdetail.AppDetailActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
+
+        <!-- Settings Activity -->
+        <activity
+            android:name=".presentation.settings.SettingsActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
+
+        <!-- Search Activity -->
+        <activity
+            android:name=".presentation.search.SearchActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
+
+        <!-- Wallpaper Picker Activity -->
+        <activity
+            android:name=".presentation.wallpaper.WallpaperActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
+
+        <!-- Boot Completed Receiver -->
+        <receiver
+            android:name=".domain.receiver.BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Package Change Receiver -->
+        <receiver
+            android:name=".domain.receiver.PackageChangeReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <action android:name="android.intent.action.PACKAGE_CHANGED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
